@@ -1,0 +1,28 @@
+start =
+    expression
+
+expression =
+  	atom
+    / atomList
+
+spacedExpression =
+	space* e:expression
+    { return e; }
+
+atomList =
+	lparens a:spacedExpression* space* rparens
+    { return a; }
+
+validchar
+    = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
+
+spacedAtoms =
+	space* a:atom { return a; }
+
+atom =
+    chars:validchar+
+        { return chars.join(""); }
+
+lparens = "("
+rparens = ")"
+space = " "
