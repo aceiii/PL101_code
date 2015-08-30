@@ -6,23 +6,33 @@ expression =
     / atomList
 
 spacedExpression =
-	space* e:expression
+	whitespace* e:expression
     { return e; }
 
 atomList =
-	lparens a:spacedExpression* space* rparens
+	lparens a:spacedExpression* whitespace* rparens
     { return a; }
 
 validchar
     = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
 
 spacedAtoms =
-	space* a:atom { return a; }
+	whitespace* a:atom { return a; }
 
 atom =
     chars:validchar+
         { return chars.join(""); }
 
+whitespace =
+    space
+    / tab
+    / newline
+    / space whitespace
+    / tab whitespace
+    / newline whitespace
+
 lparens = "("
 rparens = ")"
 space = " "
+tab = "\t"
+newline = "\n"
