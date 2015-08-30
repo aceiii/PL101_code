@@ -4,6 +4,7 @@ start =
 expression =
   	atom
     / atomList
+    / quoteExpression
 
 spacedExpression =
 	whitespace* e:expression
@@ -12,6 +13,10 @@ spacedExpression =
 atomList =
 	lparens a:spacedExpression* whitespace* rparens
     { return a; }
+
+quoteExpression =
+    q:quote e:expression
+    { return ["quote", e]; }
 
 validchar
     = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
@@ -36,3 +41,6 @@ rparens = ")"
 space = " "
 tab = "\t"
 newline = "\n"
+quote = "'"
+
+
