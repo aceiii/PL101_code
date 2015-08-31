@@ -15,6 +15,10 @@ var assert = chai.assert;
 assert.deepEqual(parse("(a b c)"), ["a", "b", "c"]);
 
 // test whitespaces: space, multiple spaces, tabs, newlines
+console.log(parse("  (a \t;; test\n\n b)"));
+assert.deepEqual(parse("  (a b\n c)\n;; test\n"), ["a", "b", "c"]);
+
+
 assert.deepEqual(parse("( a   b\t \tc)"), ["a", "b", "c"]);
 assert.deepEqual(parse("(a\nb\nc)"), ["a", "b", "c"]);
 assert.deepEqual(parse("(a\n\t b\n c)"), ["a", "b", "c"]);
@@ -23,4 +27,6 @@ assert.deepEqual(parse("(a \n(b c)\n d )"), ["a", ["b", "c"], "d"]);
 assert.deepEqual(parse("'a"), ["quote", "a"]);
 assert.deepEqual(parse("'(1 2 3)"), ["quote", ["1", "2", "3"]]);
 assert.deepEqual(parse("'(a 1 \n( b 2)\t(c 3 ( d \t  4)))"), ["quote", ["a", "1", ["b", "2"], ["c", "3", ["d", "4"]]]]);
+
+console.log(parse("( a 'b ;;This is a comment (c d e) \n\t (c d) e)\t ;; and a continue fo the comment  "));
 
